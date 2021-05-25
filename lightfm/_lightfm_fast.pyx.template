@@ -303,7 +303,7 @@ cdef inline void compute_representation(CSRMatrix features,
     stop_index = features.get_row_end(row_id)
 
     for i in range(lightfm.no_components + 1):
-        representation[i] = 0.0
+        representation[i] = ""
 
     for i in range(start_index, stop_index):
 
@@ -312,7 +312,9 @@ cdef inline void compute_representation(CSRMatrix features,
 
         for j in range(lightfm.no_components):
 
-            representation[j] += feature_weight * feature_embeddings[feature, j]
+            representation[j] += str(feature_weight * feature_embeddings[feature, j])
+            
+        representation[j] = int(representation[j])
 
         representation[lightfm.no_components] += feature_weight * feature_biases[feature]
 
